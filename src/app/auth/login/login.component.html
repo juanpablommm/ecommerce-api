@@ -1,0 +1,45 @@
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center vh-100">
+  <h1 class="vr w100 mb-3 text-center">CHALLENGE ECOMMERCE</h1>
+
+  <div class="row w-100 align-items-center justify-content-center">
+    <div class="col-md-6 p-0">
+      <form class="login-form" (ngSubmit)="onLogin()">
+        <h2 class="mb-4">Iniciar Sesión</h2>
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo Electrónico</label>
+          <input type="email" 
+                 class="form-control" 
+                 id="email" 
+                 placeholder="Ingresa tu correo electrónico" 
+                 required 
+                 [(ngModel)]="loginRequest.email" 
+                 name="email">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" 
+                 class="form-control" 
+                 id="password" 
+                 placeholder="Ingresa tu contraseña" 
+                 required 
+                 [(ngModel)]="loginRequest.password" 
+                 name="password">
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" id="staySignedIn">
+          <label class="form-check-label" for="staySignedIn2">Mantener sesión iniciada por 2 semanas</label>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+        <div class="mt-3 text-center">
+          <a href="/register">¿No tienes una cuenta? Regístrate aquí</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-6 p-0">
+      <img src="https://github.com/user-attachments/assets/d3c8f7db-005b-478c-90cb-38ab4201feee" 
+           alt="Imagen de Login" 
+           class="img-fluid login-image"> <!-- Imagen unida al formulario -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+/* user-create.component.css */
+
+/* Centrar el formulario */
+.container {
+    max-width: 600px;
+    margin-top: 50px;
+  }
+  
+  /* Mejorar la apariencia del título */
+  h2 {
+    margin-bottom: 20px;
+    color: #007bff;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Error en los campos de formulario */
+  .text-danger {
+    font-size: 0.875em;
+    color: red;
+  }
+  
+  /* Botón con un toque más atractivo */
+  .btn {
+    font-size: 1rem;
+    width: 100%;
+    padding: 12px;
+  }
+  
