@@ -1,0 +1,24 @@
+.product-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.product-list {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.product-card {
+    margin-bottom: 1rem;
+}
+
+.product-image {
+    height: 200px;
+    object-fit: contain;
+}
+
+.buy-btn {
+    margin-top: 0.5rem;
+}

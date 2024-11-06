@@ -8,12 +8,10 @@ import { LoginRequestDto } from './models/login-request-dto';
   providedIn: 'root'
 })
 export class AuthService {
-
-  private apiUrl = 'http://localhost:8080/user-management';  // Cambia esta URL por la de tu API
+  private apiUrl = 'http://localhost:8080/user-management';
 
   constructor(private http: HttpClient) {}
 
-  // Método de login
   login(loginRequest: LoginRequestDto): Observable<LoginResponseDto> {
     return this.http.post<LoginResponseDto>(`${this.apiUrl}/auth/login`, loginRequest, {
       headers: new HttpHeaders({
@@ -22,36 +20,49 @@ export class AuthService {
     });
   }
 
-  // Método para obtener el refresh token desde la cookie
   getRefreshToken(): string | null {
-    return document.cookie
-      .split('; ')
-      .find(row => row.startsWith('refresh_token='))
-      ?.split('=')[1] || null;
+    // Verificación de si `document` está disponible (solo en entorno de navegador)
+    if (typeof document !== 'undefined') {
+      return document.cookie
+        .split('; ')
+        .find(row => row.startsWith('refresh_token='))
+        ?.split('=')[1] || null;
+    }
+    return null;
   }
 
-  // Método para obtener el token de acceso desde el localStorage
   getAccessToken(): string | null {
-    return localStorage.getItem('access_token');
+    // Verificación de `localStorage`
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem('access_token');
+    }
+    return null;
   }
 
-  // Método para renovar el access token usando el refresh token
   refreshToken(refreshToken: string): Observable<LoginResponseDto> {
-    return this.http.post<LoginResponseDto>(`${this.apiUrl}/user-management/auth/refresh`, { token: refreshToken });
+    return this.http.post<LoginResponseDto>(`${this.apiUrl}/auth/refresh`, { token: refreshToken });
   }
 
-  // Método para almacenar los tokens
   storeTokens(response: LoginResponseDto): void {
-    // Guardar el access token en el localStorage
-    localStorage.setItem('access_token', response.accessToken);
+    // Guardar en localStorage solo si está disponible
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('access_token', response.accessToken);
+    }
 
-    // Guardar el refresh token en la cookie
-    document.cookie = `refresh_token=${response.token}; path=/; secure; HttpOnly; SameSite=Strict`;
+    // Guardar cookie solo si `document` está disponible
+    if (typeof document !== 'undefined') {
+      document.cookie = `refresh_token=${response.token}; path=/; secure; HttpOnly; SameSite=Strict`;
+    }
   }
 
-  // Método de logout
   logout(): void {
-    localStorage.removeItem('access_token');
-    document.cookie = 'refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    // Eliminar el token de localStorage y cookie solo en entorno de navegador
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem('access_token');
+    }
+
+    if (typeof document !== 'undefined') {
+      document.cookie = 'refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    }
   }
 }

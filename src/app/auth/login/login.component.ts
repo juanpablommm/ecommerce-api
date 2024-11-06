@@ -22,11 +22,9 @@ export class LoginComponent {
   onLogin() {
     this.authService.login(this.loginRequest).subscribe(
       (response: LoginResponseDto) => {
-        // Store tokens securely
         this.authService.storeTokens(response);
-        
-        // Redirect after login
-        this.router.navigate(['/register']); 
+
+        this.router.navigate(['/home']); 
       },
       error => {
         console.error('User authentication failed', error);

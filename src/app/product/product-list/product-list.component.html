@@ -1,0 +1,20 @@
+<div class="product-list-container">
+    <h2 class="text-center mb-4">Productos Disponibles</h2>
+    <div class="product-list row row-cols-1 row-cols-md-3 g-4">
+      <div *ngFor="let product of products" class="col product-card">
+        <div class="card">
+          <img [src]="product.urlImage" class="card-img-top product-image" [alt]="product.productName">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.productName }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="card-text"><strong>Precio:</strong> ${{ product.price }}</p>
+            <button class="btn btn-primary buy-btn" (click)="openModal(product)">Ver detalles</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal Component -->
+    <app-product-modal *ngIf="selectedProduct" [product]="selectedProduct" (close)="closeModal()"></app-product-modal>
+  </div>
+  
